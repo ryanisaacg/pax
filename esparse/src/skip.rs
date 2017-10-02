@@ -157,10 +157,18 @@ pub fn expr<'f, 's>(lex: &mut lex::Lexer<'f, 's>, prec: Prec) -> Result<()> {
             Tt::RegExpLit(_, _) |
             Tt::TemplateNoSub(_) => {},
 
-            Tt::TemplateStart(_) => balanced_templates(lex, 1)?,
-            Tt::Lbracket => balanced_brackets(lex, 1)?,
-            Tt::Lbrace => balanced_braces(lex, 1)?,
-            Tt::Lparen => balanced_parens(lex, 1)?,
+            Tt::TemplateStart(_) => {
+                balanced_templates(lex, 1)?;
+            },
+            Tt::Lbracket => {
+                balanced_brackets(lex, 1)?;
+            },
+            Tt::Lbrace => {
+                balanced_braces(lex, 1)?;
+            },
+            Tt::Lparen => {
+                balanced_parens(lex, 1)?;
+            },
 
             Tt::Function => {
                 eat!(lex,
@@ -210,9 +218,15 @@ pub fn expr<'f, 's>(lex: &mut lex::Lexer<'f, 's>, prec: Prec) -> Result<()> {
                     _ => expected!(lex, "member name"),
                 ),
                 Tt::TemplateNoSub(_) => {},
-                Tt::TemplateStart(_) => balanced_templates(lex, 1)?,
-                Tt::Lbracket => balanced_brackets(lex, 1)?,
-                Tt::Lparen => balanced_parens(lex, 1)?,
+                Tt::TemplateStart(_) => {
+                    balanced_templates(lex, 1)?;
+                },
+                Tt::Lbracket => {
+                    balanced_brackets(lex, 1)?;
+                },
+                Tt::Lparen => {
+                    balanced_parens(lex, 1)?;
+                },
 
                 Tt::StarStar |
                 Tt::Star |
@@ -301,7 +315,7 @@ pub fn expr<'f, 's>(lex: &mut lex::Lexer<'f, 's>, prec: Prec) -> Result<()> {
 /// # }
 /// ```
 #[inline]
-pub fn balanced_templates<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<()> {
+pub fn balanced_templates<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<lex::Tok<'f, 's>> {
     balanced(
         lex,
         nesting,
@@ -332,7 +346,7 @@ pub fn balanced_templates<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) 
 /// # }
 /// ```
 #[inline]
-pub fn balanced_braces<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<()> {
+pub fn balanced_braces<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<lex::Tok<'f, 's>> {
     balanced(
         lex,
         nesting,
@@ -363,7 +377,7 @@ pub fn balanced_braces<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> 
 /// # }
 /// ```
 #[inline]
-pub fn balanced_brackets<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<()> {
+pub fn balanced_brackets<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<lex::Tok<'f, 's>> {
     balanced(
         lex,
         nesting,
@@ -394,7 +408,7 @@ pub fn balanced_brackets<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -
 /// # }
 /// ```
 #[inline]
-pub fn balanced_parens<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<()> {
+pub fn balanced_parens<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> Result<lex::Tok<'f, 's>> {
     balanced(
         lex,
         nesting,
@@ -442,26 +456,29 @@ pub fn balanced_parens<'f, 's>(lex: &mut lex::Lexer<'f, 's>, nesting: usize) -> 
 /// # }
 /// ```
 #[inline]
-pub fn balanced<'f, 's, L, R>(lex: &mut lex::Lexer<'f, 's>, mut nesting: usize, mut l: L, mut r: R, expect: &'static str) -> Result<()> where
+pub fn balanced<'f, 's, L, R>(lex: &mut lex::Lexer<'f, 's>, mut nesting: usize, mut l: L, mut r: R, expect: &'static str) -> Result<lex::Tok<'f, 's>> where
 L: FnMut(Tt) -> bool,
 R: FnMut(Tt) -> bool {
     debug_assert!(nesting > 0);
     #[cold]
     #[inline(never)]
-    fn unbalanced<'f, 's>(lex: &mut lex::Lexer<'f, 's>, expect: &'static str) -> Result<()> {
+    fn unbalanced<'f, 's, T>(lex: &mut lex::Lexer<'f, 's>, expect: &'static str) -> Result<T> {
         expected!(lex, expect)
     }
-    while nesting > 0 {
-        let tt = lex.advance().tt;
+    loop {
+        let tok = lex.advance();
+        let tt = tok.tt;
         if l(tt) {
             nesting += 1;
         } else if r(tt) {
             nesting -= 1;
+            if nesting == 0 {
+                return Ok(tok)
+            }
         } else if tt == Tt::Eof {
             return unbalanced(lex, expect)
         }
     }
-    Ok(())
 }
 
 #[cfg(test)]

@@ -31,6 +31,24 @@ impl Loc {
     pub fn zero() -> Self {
         Default::default()
     }
+
+    #[inline]
+    pub fn min(self, loc: Loc) -> Self {
+        if self.pos <= loc.pos {
+            self
+        } else {
+            loc
+        }
+    }
+
+    #[inline]
+    pub fn max(self, loc: Loc) -> Self {
+        if self.pos >= loc.pos {
+            self
+        } else {
+            loc
+        }
+    }
 }
 
 /// A region of source code.
@@ -82,6 +100,24 @@ impl<F> SpanT<F> {
     #[inline]
     pub fn zero(file_name: F) -> Self {
         SpanT::new(file_name, Default::default(), Default::default())
+    }
+
+    #[inline]
+    pub fn extend_to_cover(self, span: SpanT<F>) -> Self {
+        SpanT {
+            file_name: self.file_name,
+            start: self.start.min(span.start),
+            end: self.end.max(span.end),
+        }
+    }
+
+    #[inline]
+    pub fn with_file_name<T>(&self, file_name: T) -> SpanT<T> {
+        SpanT {
+            file_name,
+            start: self.start,
+            end: self.end,
+        }
     }
 }
 

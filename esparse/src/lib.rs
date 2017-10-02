@@ -9,10 +9,11 @@
 extern crate matches;
 extern crate memchr;
 
+pub mod ast;
 #[macro_use]
 pub mod lex;
 pub mod skip;
-pub mod ast;
+pub mod push;
 
 pub use ast::{Loc, Span};
 

@@ -398,6 +398,23 @@ pub fn str_lit_value(source: &str) -> Result<Cow<str>, ParseStrLitError> {
     })
 }
 
+#[inline]
+pub fn template_no_sub_value(source: &str) -> Result<Cow<str>, ParseStrLitError> {
+    str_lit_value(&source[..source.len() - 1])
+}
+#[inline]
+pub fn template_start_value(source: &str) -> Result<Cow<str>, ParseStrLitError> {
+    str_lit_value(&source[..source.len() - 1])
+}
+#[inline]
+pub fn template_middle_value(source: &str) -> Result<Cow<str>, ParseStrLitError> {
+    str_lit_value(&source[..source.len() - 1])
+}
+#[inline]
+pub fn template_end_value(source: &str) -> Result<Cow<str>, ParseStrLitError> {
+    str_lit_value(source)
+}
+
 /// An error type for parsing string literals.
 ///
 /// Returned by [str_lit_value](fn.str_lit_value.html) when the given string literal is syntactically invalid.
@@ -445,7 +462,7 @@ impl fmt::Display for ParseStrLitError {
 }
 
 /// A lexical analyzer for JavaScript source code.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Lexer<'f, 's> {
     file_name: &'f str,
     stream: Stream<'s>,
@@ -565,6 +582,19 @@ macro_rules! eat_s {
 }
 
 impl<'f, 's> Lexer<'f, 's> {
+    #[inline]
+    pub fn new_at(file_name: &'f str, input: &'s str, start: Loc) -> Self {
+        let mut lexer = Lexer {
+            file_name,
+            stream: Stream::new_at(input, start),
+            here: Tok::new(Tt::Eof, Span::zero(file_name)),
+            frame: LexFrame::Outer,
+            stack: Vec::new(),
+        };
+        lexer.advance();
+        lexer
+    }
+
     /// Creates a new `Lexer` with the given source code and input file name.
     ///
     /// # Examples
@@ -577,15 +607,7 @@ impl<'f, 's> Lexer<'f, 's> {
     /// ```
     #[inline]
     pub fn new(file_name: &'f str, input: &'s str) -> Self {
-        let mut lexer = Lexer {
-            file_name,
-            stream: Stream::new(input),
-            here: Tok::new(Tt::Eof, Span::zero(file_name)),
-            frame: LexFrame::Outer,
-            stack: Vec::new(),
-        };
-        lexer.advance();
-        lexer
+        Self::new_at(file_name, input, Loc::zero())
     }
 
     /// Creates a new `Lexer` with the given source code and `<input>` as the file name.
@@ -3027,7 +3049,7 @@ impl<'f, 's> Iterator for Lexer<'f, 's> {
 /// Generic stream structure for source code.
 ///
 /// A `Stream` advances over its input one character at a time, tracking line and column information and providing two characters of lookahead.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Stream<'s> {
     input: &'s str,
 
@@ -3040,11 +3062,10 @@ pub struct Stream<'s> {
 }
 
 impl<'s> Stream<'s> {
-    /// Creates a new `Stream` on the given input.
-    pub fn new(input: &'s str) -> Self {
+    pub fn new_at(input: &'s str, loc: Loc) -> Self {
         let mut stream = Stream {
             input,
-            loc: Default::default(),
+            loc,
             here: None,
             next_pos: 0,
             next_width: 0,
@@ -3053,6 +3074,11 @@ impl<'s> Stream<'s> {
         stream.advance();
         stream.advance();
         stream
+    }
+
+    /// Creates a new `Stream` on the given input.
+    pub fn new(input: &'s str) -> Self {
+        Self::new_at(input, Loc::zero())
     }
 
     /// `true` if and only if the current character is `c`.
