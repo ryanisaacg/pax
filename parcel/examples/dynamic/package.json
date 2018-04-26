@@ -1,0 +1,8 @@
+{
+  "name": "dynamic",
+  "private": true,
+  "main": "math.js",
+  "dependencies": {
+    "itt": "^0.2.1"
+  }
+}

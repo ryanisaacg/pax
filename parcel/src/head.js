@@ -24,7 +24,7 @@
     this.exports = {}
   }
   Parcel.makeRequire = self => {
-    // let parts
+    let parts
 
     const require = m => require._module(m).exports
     require._deps = {}
@@ -38,14 +38,14 @@
     }
     require._module = m => {
       let fn = self ? require._deps[m] : Parcel.main
-      // if (fn === undefined) {
-      //   const filename = require.resolve(m)
-      //   fn = filename !== null ? Parcel.files[filename] : null
-      // }
       if (fn == null) {
-        const module = {exports: Parcel.baseRequire(m)}
-        require._deps[m] = {module: module}
-        return module
+        const filename = require.resolve(m)
+        fn = filename != null ? Parcel.files[filename] : null
+        if (fn == null) {
+          const module = {exports: Parcel.baseRequire(m)}
+          require._deps[m] = {module: module}
+          return module
+        }
       }
       if (fn.module) return fn.module
       const module = new Parcel.Module(fn.filename, self)
@@ -58,34 +58,34 @@
       module.loaded = true
       return module
     }
-    // require.resolve = n => {
-    //   if (!self) return n
-    //   if (n[0] === '.' || n[0] === '/') {
-    //     const p = resolvePath(n[0] === '.' ? Parcel.resolve(self.filename, '../'+n) : n)
-    //     if (p) return p
-    //   } else {
-    //     if (!parts) {
-    //       parts = self ? self.filename.split('/') : []
-    //       parts.shift()
-    //     }
-    //     const p = parts.slice()
-    //     while (p.length) {
-    //       p.pop()
-    //       if (p[p.length - 1] === 'node_modules') continue
-    //       const r = resolvePath('/' + p.join('/') + '/node_modules/' + n)
-    //       if (r) return r
-    //     }
-    //   }
-    //   return null
-    // }
-    // const resolvePath = b => {
-    //   const m = Parcel.mains[b]
-    //   if (m) return m
-    //   if (Parcel.files[b+'/index.js']) return b+'/index.js'
-    //   if (Parcel.files[b+'/index.json']) return b+'/index.json'
-    //   if (Parcel.files[b]) return b
-    //   if (Parcel.files[b+'.js']) return b+'.js'
-    //   if (Parcel.files[b+'.json']) return b+'.json'
-    // }
+    require.resolve = n => {
+      if (!self) return n
+      if (n[0] === '.' || n[0] === '/') {
+        const p = resolvePath(n[0] === '.' ? Parcel.resolve(self.filename, '../'+n) : n)
+        if (p) return p
+      } else {
+        if (!parts) {
+          parts = self ? self.filename.split('/') : []
+          parts.shift()
+        }
+        const p = parts.slice()
+        while (p.length) {
+          p.pop()
+          if (p[p.length - 1] === 'node_modules') continue
+          const r = resolvePath('/' + p.join('/') + '/node_modules/' + n)
+          if (r) return r
+        }
+      }
+      return null
+    }
+    const resolvePath = b => {
+      const m = Parcel.mains[b]
+      if (m) return m
+      if (Parcel.files[b+'/index.js']) return b+'/index.js'
+      if (Parcel.files[b+'/index.json']) return b+'/index.json'
+      if (Parcel.files[b]) return b
+      if (Parcel.files[b+'.js']) return b+'.js'
+      if (Parcel.files[b+'.json']) return b+'.json'
+    }
     return require
   }
