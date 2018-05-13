@@ -1,27 +1,16 @@
 [package]
 name = "parcel"
-version = "0.1.2"
+version = "1.0.0"
 authors = ["Nathan"]
 
-description = "The fastest JavaScript bundler around."
-repository = "https://github.com/nathan/parcel-redux"
+description = "Crate renamed to pax."
+repository = "https://github.com/nathan/pax"
+homepage = "https://crates.io/crates/pax"
 license = "MIT"
 readme = "../README.md"
 
-keywords = ["js", "javascript", "es", "ecmascript", "bundler"]
-categories = ["development-tools", "command-line-utilities", "web-programming"]
-
-exclude = [
-  "examples/*",
-  "private/*",
-]
+keywords = []
+categories = []
+include = []
 
 [dependencies]
-esparse = { version = "0.0.3", path = "../esparse" }
-crossbeam = "0.2"
-num_cpus = "1.6"
-matches = "0.1"
-json = "0.11"
-notify = "4.0"
-memchr = "1.0.1"
-base64 = "0.6.0"
