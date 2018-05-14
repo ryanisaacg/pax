@@ -1,0 +1,232 @@
+html {
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+  margin: 0;
+}
+body {
+  margin: 0;
+  background: #fff;
+}
+
+.novisual {
+  display: inline-block;
+  width: 1px;
+  margin-left: -1px;
+  text-indent: -9999px;
+}
+
+header {
+  margin: 3rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+header > h1 {
+  margin: 0;
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: 200;
+  color: #f1b;
+}
+section > h1 {
+  margin: 3rem 0 0;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 200;
+  color: #f1b;
+  text-align: center;
+}
+header > p {
+  margin: 0;
+  font-size: 1.2rem;
+  max-width: 15rem;
+  text-align: center;
+  color: rgba(0,0,0,.5);
+}
+.prompt {
+  display: inline-block;
+  cursor: default;
+  color: rgba(0,0,0,.25);
+}
+kbd:hover .prompt,
+.whoa {
+  font-style: normal;
+  color: #f1b;
+}
+.prompt::before {
+  content: '❥ ';
+  /*content: '❤︎ ';*/
+}
+pre, kbd, samp, code {
+  font-family: Fira Mono, Menlo, Monaco, Consolas, Courier New, monospace;
+}
+.line {
+  display: inline-block;
+  width: 100%;
+  line-height: 1.5;
+}
+/*.help .usage,
+.help .usage kbd {
+  line-height: 1.2;
+}*/
+.help .usage .wrap {
+  padding-bottom: .25rem;
+}
+kbd a,
+.command {
+  color: inherit;
+  text-decoration: none;
+  /*color: #f1b;*/
+  font-weight: bold;
+}
+kbd a:hover {
+  text-decoration: underline;
+}
+.arg {
+  font-weight: normal !important;
+}
+pre {
+  margin: 1rem auto;
+  white-space: pre-wrap;
+}
+.help {
+  max-width: 40rem;
+  padding: 0 .5rem;
+}
+.source {
+  max-width: 39rem;
+  padding: 0 .5rem 0 1.5rem;
+}
+.source .file,
+p > .file {
+  display: inline-block;
+  color: rgba(0,0,0,.5);
+  font-weight: normal;
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+}
+.source .file {
+  margin: -.1rem 0 .25rem -1rem;
+}
+p > .file {
+  padding: 0 .1rem;
+}
+.example {
+  border-radius: .25rem;
+  background: rgba(0,0,0,.04);
+  padding: .5rem;
+  max-width: 20rem;
+}
+section > p,
+section > ul {
+  margin: 1rem auto;
+  max-width: 40rem;
+  padding: 0 .5rem;
+  line-height: 1.5;
+  text-align: justify;
+}
+p a:visited {
+  color: #50b;
+}
+p a:link,
+p a:active {
+  color: #f1b;
+}
+section > ul {
+  padding-left: 2rem;
+  max-width: 38rem;
+}
+li {
+  margin-top: .5rem;
+}
+pre h2,
+.k {
+  margin: 0;
+  display: inline;
+  font: inherit;
+  color: #f1b;
+}
+pre h3 {
+  margin: 0;
+  display: inline;
+  font: inherit;
+  padding-bottom: .5rem;
+}
+.keyword {
+  font-style: italic;
+}
+.lede {
+  max-width: 20rem;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+.option {
+  white-space: pre;
+}
+.file,
+.opt {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.nb {
+  white-space: nowrap;
+}
+.output {
+  color: rgba(0,0,0,.5);
+}
+.s,
+.n {
+  color: rgba(0,0,0,.3);
+}
+.t {
+  color: #b50;
+}
+.p {
+  color: #50b;
+}
+.sym {
+  color: rgba(0,0,0,.25);
+  font-style: normal;
+}
+.wrap {
+  display: inline-flex;
+  width: 100%;
+}
+.wrap :first-child {
+  flex: 0 0 auto;
+}
+.key,
+.inl {
+  display: inline-block;
+  padding: .1rem .25rem;
+  margin: -.1rem 0;
+  background: rgba(0,0,0,.04);
+  border-radius: .25rem;
+  color: rgba(0,0,0,.7);
+}
+.inl {
+  font-size: .85em;
+}
+.key {
+  font: inherit;
+}
+
+.love {
+  color: #f1b;
+}
+
+footer {
+  margin: 5rem 0 1rem;
+  color: rgba(0,0,0,.5);
+  text-align: center;
+}
+footer a:link,
+footer a:visited {
+  color: inherit;
+}
+footer a:hover {
+  color: #000;
+}
+footer a:active {
+  color: #f1b;
+}
