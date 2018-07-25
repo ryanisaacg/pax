@@ -9,11 +9,11 @@
 </header>
 
 <pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=https://crates.io/install title="Learn how to install cargo">cargo</a> install <a class=arg href=https://crates.io/crates/pax>pax</a></kbd>
-<kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">pax</a> --watch index.js bundle.js</kbd></pre>
+<kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">px</a> --watch index.js bundle.js</kbd></pre>
 
 <section id=why>
 <h1>Why?</h1>
-<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=#fast title="View benchmarks">time</a> pax index.js bundle.js</kbd>
+<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=#fast title="View benchmarks">time</a> px index.js bundle.js</kbd>
 <span class=output>real  <em class=whoa>0m0.015s</em>
 user  0m0.006s
 sys   0m0.006s</span></pre>
@@ -38,7 +38,7 @@ sys   0m0.006s</span></pre>
 <section id=how>
 <h1>How?</h1>
 <pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=https://crates.io/install title="Learn how to install cargo">cargo</a> install <a class=arg href=https://crates.io/crates/pax>pax</a></kbd>
-<kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">pax</a> --watch index.js bundle.js</kbd>
+<kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">px</a> --watch index.js bundle.js</kbd>
 <span class=output> ready bundle.js <em class=whoa>2ms</em>
 update bundle.js 1ms
 update bundle.js 1ms
@@ -73,18 +73,18 @@ update bundle.js 1ms
 
 <p>Tell Pax to generate <kbd class=file>bundle.js</kbd> and <kbd class=file>bundle.js.map</kbd>, and update whenever a file changes:</p>
 
-<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">pax</a> --watch index.js bundle.js</kbd></pre>
+<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><a href=#options title="Learn about Pax’s options">px</a> --watch index.js bundle.js</kbd></pre>
 
 <p>If you want to use ECMAScript module syntax (<code><span class=k>import</span></code>/<code><span class=k>export</span></code>) in your <kbd class=file>.mjs</kbd> files, just pass <kbd class=opt>--es-syntax</kbd> (<kbd class=opt>-e</kbd> for short). If you want that in your <kbd class=file>.js</kbd> files too, pass <kbd class=opt>--es-syntax-everywhere</kbd> (<kbd class=opt>-E</kbd>) instead. If you need anything else, check out the <a href=#options>options</a> below. Pax loves you!</p>
 </section>
 
 <section id=options>
 <h1>Options</h1>
-<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><span class=command>pax</span> --help</kbd></pre>
-<pre class=help><samp class=version><span class=command>pax</span> <span class=s>v</span>0<span class=s>.</span>2<span class=s>.</span>3</samp>
+<pre class=example><kbd class=line><span class=prompt title="Select this line"></span><span class=command>px</span> --help</kbd></pre>
+<pre class=help><samp class=version><span class=command>pax</span> <span class=s>v</span>0<span class=s>.</span>3<span class=s>.</span>0</samp>
 
-<span class=usage><span class=wrap><span><h2>Usage:</h2> </span><kbd><span class=command>pax</span> <var><span class=sym>[</span>options<span class=sym>]</span></var> <var><span class=sym>&lt;</span>input<span class=sym>></span></var> <var><span class=sym>[</span>output<span class=sym>]</span></var></kbd></span>
-<span class=wrap><span>       </span><kbd><span class=command>pax</span> <span class=sym>[</span>-h <span class=sym>|</span> --help <span class=sym>|</span> -v <span class=sym>|</span> --version<span class=sym>]</span></kbd></span></span>
+<span class=usage><span class=wrap><span><h2>Usage:</h2> </span><kbd><span class=command>px</span> <var><span class=sym>[</span>options<span class=sym>]</span></var> <var><span class=sym>&lt;</span>input<span class=sym>></span></var> <var><span class=sym>[</span>output<span class=sym>]</span></var></kbd></span>
+<span class=wrap><span>       </span><kbd><span class=command>px</span> <span class=sym>[</span>-h <span class=sym>|</span> --help <span class=sym>|</span> -v <span class=sym>|</span> --version<span class=sym>]</span></kbd></span></span>
 
 <h2>Options:</h2>
 <h3 class=wrap><span>    </span><span><kbd class=opt>-i</kbd><span class=sym>,</span> <span class=opt>--input</span> <var><span class=sym>&lt;</span>input<span class=sym>></span></var></span></h3>
