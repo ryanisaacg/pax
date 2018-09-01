@@ -124,6 +124,12 @@ update bundle.js 1ms
 <h3 class=wrap><span>    </span><span><kbd class=opt>-E</kbd><span class=sym>,</span> <kbd class=opt>--es-syntax-everywhere</kbd></span></h3>
 <span class=wrap><span>        </span><span><span class=keyword>Implies</span> <kbd class=opt>--es-syntax</kbd>. Allow ECMAScript module syntax in <kbd class=file>.js</kbd> files. CJS-style <span class=sym>`</span><code><span class=p>require</span><span class=s>()</span></code><span class=sym>`</span> calls are also allowed.</span></span>
 
+<h3 class=wrap><span>    </span><span><kbd class=opt>-x</kbd><span class=sym>,</span> <kbd class=opt>--external</kbd> <span class=sym>&lt;</span>module1<span class=sym>,</span>module2<span class=sym>,...></span></span></h3>
+<span class=wrap><span>        </span><span>Don't resolve or include modules named <var><span class=sym>&lt</span>module1<span class=sym>></span></var>, <var><span class=sym>&lt</span>module2<span class=sym>></span></var>, etc.; leave them as <span class=p>require</span><span class=s>('</span><var class=t><span class=sym>&lt;</span>module<span class=sym>></span></var><span class=s>')</span> references in the bundle. Specifying a path instead of a module name does nothing.</span></span>
+
+<h3 class=wrap><span>    </span><span><kdb class=opt>--external-core</kdb></span></h3>
+<span class=wrap><span>        </span><span>Ignore references to node.js core modules like <span class=s>'</span><span class=t>events</span><span class=s>'</span> and leave them as <span class=p>require</span><span class=s>('</span><var class=t><span class=sym>&lt;</span>module<span class=sym>></span></var><span class=s>')</span> references in the bundle.</span></span>
+
 <h3 class=wrap><span>    </span><span><kbd class=opt>-h</kbd><span class=sym>,</span> <kbd class=opt>--help</kbd></span></h3>
 <span class=wrap><span>        </span><span>Print this message.</span></span>
 
