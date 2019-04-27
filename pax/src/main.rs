@@ -910,7 +910,7 @@ Options:
         Implies --watch.
 
     -e, --es-syntax
-        Support .mjs files with ECMAScript module syntax:
+        Support .js files with ECMAScript module syntax:
 
             import itt from 'itt'
             export const greeting = 'Hello, world!'
@@ -920,7 +920,7 @@ Options:
             const itt = require('itt')
             exports.greeting = 'Hello, world!'
 
-        .mjs (ESM) files can import .js (CJS) files, in which case the
+        .js (ESM) files can import .js (CJS) files, in which case the
         namespace object has a single `default` binding which reflects the
         value of `module.exports`. CJS files can require ESM files, in which
         case the resultant object is the namespace object.
@@ -1286,7 +1286,7 @@ impl Worker {
 
             let deps;
             let ext = module.extension();
-            if matches!(ext, Some(s) if s == "mjs") {
+            if matches!(ext, Some(s) if s == "js") {
                 let module = es6::module_to_cjs(&mut lexer, false)?;
                 // println!("{:#?}", module);
                 deps = module.deps;
@@ -1527,8 +1527,8 @@ impl Resolver {
             let mut new_file_name = file_name.to_owned();
 
             if self.input_options.es6_syntax {
-                // <path>.mjs
-                new_file_name.push(".mjs");
+                // <path>.js
+                new_file_name.push(".js");
                 path.set_file_name(&new_file_name);
                 check_path!(package_info, path);
                 new_file_name.clear();
@@ -1556,8 +1556,8 @@ impl Resolver {
         }
 
         if self.input_options.es6_syntax {
-            // <path>/index.mjs
-            path.push("index.mjs");
+            // <path>/index.js
+            path.push("index.js");
             check_path!(package_info, path);
             path.pop();
         }
